@@ -17,7 +17,7 @@ object Main extends LazyLogging {
     stopWatch.stop()
 
     logger.info(
-      "Main Function Time Taken To Complete" + stopWatch
+      "Main Function Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
   }
