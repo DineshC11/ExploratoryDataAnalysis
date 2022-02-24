@@ -66,9 +66,9 @@ class NumericAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
     for (inputRow <- strCSVFileContents) {
       println(
         "The Mean    is : " + (inputRow.toList
-          .map(_.toInt)
+          .map(_.toDouble)
           .sum) / (inputRow.toList
-          .map(_.toInt)
+          .map(_.toDouble)
           .length)
       )
     }

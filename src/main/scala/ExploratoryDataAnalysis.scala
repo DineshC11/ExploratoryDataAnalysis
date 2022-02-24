@@ -9,6 +9,8 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
 
   val inputType = new ArrayBuffer[Array[String]]()
   val inputRows = new ArrayBuffer[Array[String]]()
+  val numericCols = new ArrayBuffer[Array[String]]()
+  val stringCols = new ArrayBuffer[Array[String]]()
 
   val tempFile = "/home/dineshk/Downloads/Sample CSV Files/tempProcess.csv"
 
@@ -66,10 +68,22 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
     checkColumnType(inputRows)
     getColumnSize(inputRows)
 
-//    val obj1 = new NumericAnalyzer(inputRows)
-//    obj1.process()
+    for (inputRow <- inputRows) {
 
-    val obj2 = new StringAnalyzer(inputRows)
+      if (
+        (inputRow.head
+          .forall(Character.isDigit)) || parseDouble(inputRow.head).isDefined
+      ) {
+        numericCols += inputRow
+      } else {
+        stringCols += inputRow
+      }
+    }
+
+    val obj1 = new NumericAnalyzer(numericCols)
+    obj1.process()
+
+    val obj2 = new StringAnalyzer(stringCols)
     obj2.process()
 
     //    produceOutput(strCSVFileContents: String)
@@ -93,51 +107,5 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
       "Output Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
-
-  }
-
-  override def checkColumnType(
-      strCSVFileContents: ArrayBuffer[Array[String]]
-  ): Any = {
-
-    val stopWatch = new StopWatch()
-    stopWatch.start()
-
-    for (inputRow <- strCSVFileContents) {
-
-      if (inputRow.head.forall(Character.isDigit)) {
-        println("This Column is Numeric")
-      } else {
-        println("This Column is String")
-      }
-    }
-
-    stopWatch.stop()
-
-    logger.info(
-      "Check Column Type Time Taken To Complete : " + stopWatch
-        .getTime() + " ms "
-    )
-
-  }
-
-  override def getColumnSize(
-      strCSVFileContents: ArrayBuffer[Array[String]]
-  ): Any = {
-
-    val stopWatch = new StopWatch()
-    stopWatch.start()
-
-    for (inputRow <- strCSVFileContents) {
-      println("The Column Length is : " + inputRow.toList.length)
-    }
-
-    stopWatch.stop()
-
-    logger.info(
-      "Get Column Size Time Taken To Complete : " + stopWatch
-        .getTime() + " ms "
-    )
-
   }
 }
