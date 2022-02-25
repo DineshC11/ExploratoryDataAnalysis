@@ -1,8 +1,6 @@
+import scala.collection.mutable.ArrayBuffer
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.commons.lang3.time.StopWatch
-
-import scala.collection.immutable.Nil.head
-import scala.collection.mutable.ArrayBuffer
 
 trait Analyzer extends LazyLogging {
 
@@ -14,10 +12,12 @@ trait Analyzer extends LazyLogging {
 
   def checkColumnType(
       strCSVFileContents: ArrayBuffer[Array[String]]
-  ): Any = {
+  ): ArrayBuffer[String] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
+
+    val columType = new ArrayBuffer[String]()
 
     for (inputRow <- strCSVFileContents) {
 
@@ -25,9 +25,9 @@ trait Analyzer extends LazyLogging {
         (inputRow.head
           .forall(Character.isDigit)) || parseDouble(inputRow.head).isDefined
       ) {
-        println("This Column is of Numeric")
+        columType += "Numeric"
       } else {
-        println("This Column is of String")
+        columType += "String"
       }
     }
 
@@ -37,17 +37,21 @@ trait Analyzer extends LazyLogging {
       "Check Column Type Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
+
+    return columType
   }
 
   def getColumnSize(
       strCSVFileContents: ArrayBuffer[Array[String]]
-  ): Any = {
+  ): ArrayBuffer[Int] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
+    val columSize = new ArrayBuffer[Int]()
+
     for (inputRow <- strCSVFileContents) {
-      println("The Column Length is : " + inputRow.toList.length)
+      columSize += inputRow.toList.length.toInt
     }
 
     stopWatch.stop()
@@ -56,6 +60,8 @@ trait Analyzer extends LazyLogging {
       "Get Column Size Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
+
+    return columSize
   }
 
   stopWatch.stop()

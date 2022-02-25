@@ -1,23 +1,24 @@
 import scala.collection.mutable.ArrayBuffer
 import com.typesafe.scalalogging.LazyLogging
-import jdk.nashorn.internal.objects.NativeString.toLowerCase
 import org.apache.commons.lang3.time.StopWatch
-
-import java.lang.Character.isLowerCase
-import scala.Console.in
 
 class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
     extends LazyLogging {
 
-  def process(): Any = {
+  def process(): (
+      ArrayBuffer[String],
+      ArrayBuffer[String],
+      ArrayBuffer[String],
+      ArrayBuffer[String]
+  ) = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
-    getColumnUniqueValues
-    getColumnRepeatedValues
-    getColumnCaseType
-    getAbbreviationCount
+    val colUniVal = getColumnUniqueValues
+    val colRepVal = getColumnRepeatedValues
+    val colCaseType = getColumnCaseType
+    val colCntVal = getAbbreviationCount
 
     stopWatch.stop()
 
@@ -25,17 +26,18 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
       "String Analyzer Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
+    (colUniVal, colRepVal, colCaseType, colCntVal)
   }
 
-  private def getColumnUniqueValues: Any = {
+  private def getColumnUniqueValues: ArrayBuffer[String] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
+    val columUniq = new ArrayBuffer[String]()
+
     for (inputRow <- strCSVFileContents) {
-      println(
-        "The Unique Column Value Count is : " + inputRow.toList.distinct.length
-      )
+      columUniq += inputRow.toList.distinct.length.toString
     }
 
     stopWatch.stop()
@@ -45,12 +47,15 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
         .getTime() + " ms "
     )
 
+    return columUniq
   }
 
-  private def getColumnRepeatedValues: Any = {
+  private def getColumnRepeatedValues: ArrayBuffer[String] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
+
+    val columRept = new ArrayBuffer[String]()
 
     val MAX_CHARS = 256
     val ctr = new Array[Int](MAX_CHARS)
@@ -62,14 +67,10 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
         }
       val repeatValuesCount = repeatValues.toList.length
 
-      if (repeatValues.nonEmpty) {
-        println(
-          "The Column Repeated Value is : " + repeatValues + " and the count is : " + repeatValuesCount
-        )
+      if (repeatValuesCount > 0) {
+        columRept += (repeatValues + "-" + repeatValuesCount)
       } else {
-        println(
-          "The Column has no Repeated Values"
-        )
+        columRept += "None"
       }
     }
 
@@ -79,9 +80,11 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
       "String Analyzer (Repeated Values) Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
+
+    return columRept
   }
 
-  private def getColumnCaseType: Any = {
+  private def getColumnCaseType: ArrayBuffer[String] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
@@ -91,6 +94,8 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
     var upperCase = 0
     var lowerCase = 0
     var mixedCase = 0
+
+    val columCase = new ArrayBuffer[String]()
 
     for (inputRow <- strCSVFileContents) {
 
@@ -104,11 +109,9 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
         } else
           mixedCase += 1
       }
-    }
 
-    println(
-      "\n Upper Case Count is : " + upperCase + "\n Lower Case Count is : " + lowerCase + "\n Mixed Case Count is : " + mixedCase
-    )
+      columCase += ("Upper - " + upperCase + " : Lower - " + lowerCase + " : Mixed - " + mixedCase).toString
+    }
 
     stopWatch.stop()
 
@@ -116,15 +119,19 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
       "String Analyzer (Case Type) Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
+
+    return columCase
   }
 
-  private def getAbbreviationCount: Any = {
+  private def getAbbreviationCount: ArrayBuffer[String] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
     var checkType = ""
     var countAbbr = 0
+
+    val columAbbr = new ArrayBuffer[String]()
 
     for (inputRow <- strCSVFileContents) {
 
@@ -135,16 +142,11 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
           countAbbr += 1
         }
       }
-    }
-
-    if (countAbbr != 0) {
-      println(
-        "\n Total Number of Abbreviation Count in This File is : " + countAbbr + "\n"
-      )
-    } else {
-      println(
-        "\n No Abbreviation found in this file \n"
-      )
+      if (countAbbr > 0) {
+        columAbbr += countAbbr.toString
+      } else {
+        columAbbr += "None"
+      }
     }
 
     stopWatch.stop()
@@ -153,5 +155,8 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
       "String Analyzer (Abbreviation Count) Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
+
+    return columAbbr
+
   }
 }

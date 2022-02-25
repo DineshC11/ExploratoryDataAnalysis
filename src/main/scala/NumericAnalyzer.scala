@@ -6,14 +6,15 @@ import scala.collection.mutable.ArrayBuffer
 class NumericAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
     extends LazyLogging {
 
-  def process(): Any = {
+  def process()
+      : (ArrayBuffer[Double], ArrayBuffer[Double], ArrayBuffer[Double]) = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
-    getColumnMin
-    getColumnMax
-    getColumnMean
+    val colMinVal = getColumnMin
+    val colMaxVal = getColumnMax
+    val colMeanVal = getColumnMean
 
     stopWatch.stop()
 
@@ -21,15 +22,18 @@ class NumericAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
       "Numeric Analyzer Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
+    (colMinVal, colMaxVal, colMeanVal)
   }
 
-  private def getColumnMax: Any = {
+  private def getColumnMax: ArrayBuffer[Double] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
+    val columMax = new ArrayBuffer[Double]()
+
     for (inputRow <- strCSVFileContents) {
-      println("The Maximum is : " + inputRow.toList.max)
+      columMax += (inputRow.toList.max).toDouble
     }
 
     stopWatch.stop()
@@ -38,16 +42,19 @@ class NumericAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
       "Numeric Analyzer (Max) Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
+
+    return columMax
   }
 
-  private def getColumnMin: Any = {
+  private def getColumnMin: ArrayBuffer[Double] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
-    for (inputRow <- strCSVFileContents) {
-      println("The Minimum is : " + inputRow.toList.min)
+    val columMin = new ArrayBuffer[Double]()
 
+    for (inputRow <- strCSVFileContents) {
+      columMin += (inputRow.toList.min).toDouble
     }
 
     stopWatch.stop()
@@ -56,21 +63,24 @@ class NumericAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
       "Numeric Analyzer (Min) Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
+
+    return columMin
   }
 
-  private def getColumnMean: Any = {
+  private def getColumnMean: ArrayBuffer[Double] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
+    val columMean = new ArrayBuffer[Double]()
+
     for (inputRow <- strCSVFileContents) {
-      println(
-        "The Mean    is : " + (inputRow.toList
-          .map(_.toDouble)
-          .sum) / (inputRow.toList
-          .map(_.toDouble)
-          .length)
-      )
+      columMean += (inputRow.toList
+        .map(_.toDouble)
+        .sum) / (inputRow.toList
+        .map(_.toDouble)
+        .length)
+        .toDouble
     }
 
     stopWatch.stop()
@@ -79,5 +89,7 @@ class NumericAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
       "Numeric Analyzer (Mean) Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
+
+    return columMean
   }
 }

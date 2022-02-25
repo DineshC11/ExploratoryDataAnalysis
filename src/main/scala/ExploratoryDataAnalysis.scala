@@ -65,8 +65,11 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
       }
     }
 
-    checkColumnType(inputRows)
-    getColumnSize(inputRows)
+    val retType = checkColumnType(inputRows)
+    val retSize = getColumnSize(inputRows)
+
+    println(retType)
+    println(retSize)
 
     for (inputRow <- inputRows) {
 
@@ -81,12 +84,15 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
     }
 
     val obj1 = new NumericAnalyzer(numericCols)
-    obj1.process()
+    val retNum = obj1.process()
 
     val obj2 = new StringAnalyzer(stringCols)
-    obj2.process()
+    val retStr = obj2.process()
 
-    //    produceOutput(strCSVFileContents: String)
+    println(retNum)
+    println(retStr)
+
+    //produceOutput(strNumericContents)
 
     stopWatch.stop()
 
@@ -96,10 +102,12 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
     )
   }
 
-  private def produceOutput(strDataAnalyzed: String): Any = {
+  private def produceOutput(strDataAnalyzed: Any): Any = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
+
+    //print(strDataAnalyzed)
 
     stopWatch.stop()
 
