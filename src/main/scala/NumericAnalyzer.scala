@@ -7,7 +7,7 @@ class NumericAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
     extends LazyLogging {
 
   def process()
-      : (ArrayBuffer[Double], ArrayBuffer[Double], ArrayBuffer[Double]) = {
+      : (ArrayBuffer[String], ArrayBuffer[String], ArrayBuffer[String]) = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
@@ -22,18 +22,19 @@ class NumericAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
       "Numeric Analyzer Time Taken To Complete : " + stopWatch
         .getTime() + " ms "
     )
+
     (colMinVal, colMaxVal, colMeanVal)
   }
 
-  private def getColumnMax: ArrayBuffer[Double] = {
+  private def getColumnMax: ArrayBuffer[String] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
-    val columMax = new ArrayBuffer[Double]()
+    val columMax = new ArrayBuffer[String]()
 
     for (inputRow <- strCSVFileContents) {
-      columMax += (inputRow.toList.max).toDouble
+      columMax += "Max , " + (inputRow.toList.max)
     }
 
     stopWatch.stop()
@@ -46,15 +47,15 @@ class NumericAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
     return columMax
   }
 
-  private def getColumnMin: ArrayBuffer[Double] = {
+  private def getColumnMin: ArrayBuffer[String] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
-    val columMin = new ArrayBuffer[Double]()
+    val columMin = new ArrayBuffer[String]()
 
     for (inputRow <- strCSVFileContents) {
-      columMin += (inputRow.toList.min).toDouble
+      columMin += "Min , " + (inputRow.toList.min)
     }
 
     stopWatch.stop()
@@ -67,20 +68,20 @@ class NumericAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
     return columMin
   }
 
-  private def getColumnMean: ArrayBuffer[Double] = {
+  private def getColumnMean: ArrayBuffer[String] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
-    val columMean = new ArrayBuffer[Double]()
+    val columMean = new ArrayBuffer[String]()
 
     for (inputRow <- strCSVFileContents) {
-      columMean += (inputRow.toList
+      columMean += "Mean , " + (inputRow.toList
         .map(_.toDouble)
         .sum) / (inputRow.toList
         .map(_.toDouble)
         .length)
-        .toDouble
+
     }
 
     stopWatch.stop()

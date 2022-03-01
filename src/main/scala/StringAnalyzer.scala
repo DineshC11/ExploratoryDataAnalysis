@@ -37,7 +37,7 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
     val columUniq = new ArrayBuffer[String]()
 
     for (inputRow <- strCSVFileContents) {
-      columUniq += inputRow.toList.distinct.length.toString
+      columUniq += "Unique Values , " + inputRow.toList.distinct.length.toString
     }
 
     stopWatch.stop()
@@ -68,9 +68,9 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
       val repeatValuesCount = repeatValues.toList.length
 
       if (repeatValuesCount > 0) {
-        columRept += (repeatValues + "-" + repeatValuesCount)
+        columRept += "Repeated Values ," + (repeatValues + ", Count is :" + repeatValuesCount)
       } else {
-        columRept += "None"
+        columRept += "Repeated Values ," + "None"
       }
     }
 
@@ -110,7 +110,7 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
           mixedCase += 1
       }
 
-      columCase += ("Upper - " + upperCase + " : Lower - " + lowerCase + " : Mixed - " + mixedCase).toString
+      columCase += ("Case Type ," + "U" + upperCase + " : L" + lowerCase + " : M" + mixedCase).toString
     }
 
     stopWatch.stop()
@@ -143,9 +143,9 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
         }
       }
       if (countAbbr > 0) {
-        columAbbr += countAbbr.toString
+        columAbbr += "Abbreviation Count ," + countAbbr.toString
       } else {
-        columAbbr += "None"
+        columAbbr += "Abbreviation Count , None"
       }
     }
 

@@ -25,9 +25,9 @@ trait Analyzer extends LazyLogging {
         (inputRow.head
           .forall(Character.isDigit)) || parseDouble(inputRow.head).isDefined
       ) {
-        columType += "Numeric"
+        columType += "Column Type , Numeric"
       } else {
-        columType += "String"
+        columType += "Column Type , String"
       }
     }
 
@@ -43,15 +43,15 @@ trait Analyzer extends LazyLogging {
 
   def getColumnSize(
       strCSVFileContents: ArrayBuffer[Array[String]]
-  ): ArrayBuffer[Int] = {
+  ): ArrayBuffer[String] = {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
-    val columSize = new ArrayBuffer[Int]()
+    val columSize = new ArrayBuffer[String]()
 
     for (inputRow <- strCSVFileContents) {
-      columSize += inputRow.toList.length.toInt
+      columSize += "Column Size , " + inputRow.toList.length.toInt.toString
     }
 
     stopWatch.stop()
