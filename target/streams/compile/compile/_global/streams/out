@@ -1,2 +1,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mAcquiring lock on file /home/dineshk/Downloads/Work/ExploratoryDataAnalysis/project/target/.sbt-compilation-infos/root-compile/.sbt-idea-lock ...[0m
+[0m[[0m[33mwarn[0m] [0m[0m4 deprecations (since 2.13.0)[0m
+[0m[[0m[33mwarn[0m] [0m[0m2 deprecations (since 2.13.3)[0m
+[0m[[0m[33mwarn[0m] [0m[0m6 deprecations in total; re-run with -deprecation for details[0m
+[0m[[0m[33mwarn[0m] [0m[0m1 feature warning; re-run with -feature for details[0m
+[0m[[0m[33mwarn[0m] [0m[0mfour warnings found[0m
 [0m[[0m[0mdebug[0m] [0m[0mReleasing lock on file /home/dineshk/Downloads/Work/ExploratoryDataAnalysis/project/target/.sbt-compilation-infos/root-compile/.sbt-idea-lock.[0m

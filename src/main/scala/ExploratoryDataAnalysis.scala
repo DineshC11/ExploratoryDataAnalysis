@@ -23,7 +23,7 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
       resource.close()
     }
 
-  def analyzer(csvFilePath: String): Unit = {
+  def analyzer(csvFilePath: String) {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
@@ -54,7 +54,7 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
     )
   }
 
-  private def performAnalysis(strCSVFileContents: String): Unit = {
+  private def performAnalysis(strCSVFileContents: String) {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
@@ -85,18 +85,6 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
 
     val obj2 = new StringAnalyzer(stringCols)
     val retStr = obj2.process()
-
-    for (inputRow <- inputRows) {
-
-      if (
-        (inputRow.head
-          .forall(Character.isDigit)) || parseDouble(inputRow.head).isDefined
-      ) {
-        numericCols += inputRow
-      } else {
-        stringCols += inputRow
-      }
-    }
 
     var colMin = retNum._1.toList
     var colMax = retNum._2.toList

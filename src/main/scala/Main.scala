@@ -3,7 +3,7 @@ import com.typesafe.scalalogging.LazyLogging
 import org.apache.commons.lang3.time.StopWatch
 
 object Main extends LazyLogging {
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]) {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
