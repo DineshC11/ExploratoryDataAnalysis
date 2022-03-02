@@ -91,13 +91,13 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
 
     var checkType = ""
 
-    var upperCase = 0
-    var lowerCase = 0
-    var mixedCase = 0
-
     val columCase = new ArrayBuffer[String]()
 
     for (inputRow <- strCSVFileContents) {
+
+      var upperCase = 0
+      var lowerCase = 0
+      var mixedCase = 0
 
       for (x <- inputRow) {
         checkType = x.split(",").mkString
