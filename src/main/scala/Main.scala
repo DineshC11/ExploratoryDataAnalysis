@@ -9,7 +9,7 @@ object Main extends LazyLogging {
     stopWatch.start()
 
     println("Enter the File Path :")
-    val filePath = readLine()
+    val filePath: String = readLine()
 
     val obj = new ExploratoryDataAnalysis
     obj.analyzer(filePath)
