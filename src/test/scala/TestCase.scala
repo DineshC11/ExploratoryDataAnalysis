@@ -1,8 +1,5 @@
-import org.scalatest.funsuite.AnyFunSuite
-
-import java.io.PrintWriter
-import scala.io.Source
 import scala.io.StdIn.readLine
+import org.scalatest.funsuite.AnyFunSuite
 
 class TestCase extends AnyFunSuite {
 
