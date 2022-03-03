@@ -1,6 +1,5 @@
-import scala.util.Try
+import scala.io.Source
 import java.io.PrintWriter
-import util.control.Exception._
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.commons.lang3.time.StopWatch
@@ -11,6 +10,7 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
   val inputRows = new ArrayBuffer[Array[String]]()
   val numericCols = new ArrayBuffer[Array[String]]()
   val stringCols = new ArrayBuffer[Array[String]]()
+  val columName = new ArrayBuffer[String]()
 
   val tempFile = "/home/dineshk/Downloads/Sample CSV Files/tempProcess.csv"
 
@@ -23,13 +23,35 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
       resource.close()
     }
 
+  /** #1 Func : Analyze the initial file possibilities.
+    *
+    * @param : File path as string
+    * @return : The initial operation of opening the file and performing the matrix
+    * transpose and store it into a temporary file to continue further processing. So that
+    * it won’t affect the original data given. From here the performAnalysis method gets
+    * call’ ed.
+    */
+
   def analyzer(csvFilePath: String) {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
+    val inpHeader = Source
+      .fromFile(
+        csvFilePath
+      )
+      .getLines
+      .next()
+      .split(",")
+      .toArray
+
+    for (i <- inpHeader.indices) {
+      columName += inpHeader(i)
+    }
+
     using(io.Source.fromFile(csvFilePath)) { source =>
-      for (inputLine <- source.getLines) {
+      for (inputLine <- source.getLines.drop(1)) {
         inputType += inputLine.split(",").map(_.trim)
       }
     }
@@ -53,6 +75,16 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
         .getTime() + " ms "
     )
   }
+
+  /** #2 Func : Perform the analyzed file possibilities.
+    *
+    * @param : File contents as string
+    * @return : Where in this method it performs the operation like splitting the Numeric columns and String columns and
+    * from here the identified columns are sent to their respective Numeric Analyzer
+    * and String Analyzer class. Gets back the values returned from the different classes
+    * and consolidates them into a formatted output. From here the produceOutput
+    * method gets call’ ed.
+    */
 
   private def performAnalysis(strCSVFileContents: String) {
 
@@ -123,7 +155,6 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
         colMin = colMin.drop(1)
         colMax = colMax.drop(1)
         colMean = colMean.drop(1)
-
       }
     }
 
@@ -137,21 +168,41 @@ class ExploratoryDataAnalysis extends Analyzer with LazyLogging {
     )
   }
 
+  /** #3 Func : Produce the final output as an csv file format.
+    *
+    * @param : Processed file contents as string
+    * @return : Where in this method it performs the
+    * operation of producing the output in a formatted way and writing it into a csv file.
+    * Thus concludes the final operation.
+    */
+
   private def produceOutput(strDataAnalyzed: ArrayBuffer[String]) {
 
     val stopWatch = new StopWatch()
     stopWatch.start()
 
+    var countIterator = 1
+
     val outFile = "/home/dineshk/Downloads/Sample CSV Files/finalOut.csv"
     val objWriter = new PrintWriter(outFile)
 
-    var j = 1
     for (i <- strDataAnalyzed) {
 
       if (i == "Column Type , String" || i == "Column Type , Numeric") {
-        objWriter.write("\n")
-        objWriter.write("Column No \t " + j + "\n\n")
-        j = j + 1
+
+        if (columName.nonEmpty) {
+
+          objWriter.write("\n")
+          objWriter.write("Column No \t " + countIterator + "\n")
+          objWriter.write(
+            "Column Name \t " + columName(countIterator - 1) + "\n\n"
+          )
+        } else {
+
+          objWriter.write("\n")
+          objWriter.write("Column No \t " + countIterator + "\n\n")
+        }
+        countIterator = countIterator + 1
       }
 
       objWriter.write(i + "\n")

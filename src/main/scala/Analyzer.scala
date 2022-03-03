@@ -10,6 +10,13 @@ trait Analyzer extends LazyLogging {
   def parseDouble(s: String) = try { Some(s.toDouble) }
   catch { case _ => None }
 
+  /** #1 Func : Column Type Identification for each column given.
+    *
+    * @param : File contents as array buffer of string
+    * @return : Basically, what it does was figure out the
+    * data type of each column.
+    */
+
   def checkColumnType(
       strCSVFileContents: ArrayBuffer[Array[String]]
   ): ArrayBuffer[String] = {
@@ -40,6 +47,13 @@ trait Analyzer extends LazyLogging {
 
     return columType
   }
+
+  /** #2 Func : Column Size Identification for each column given.
+    *
+    * @param : File contents as array buffer of string
+    * @return : Basically, what it does was figure out the
+    * size of each column.
+    */
 
   def getColumnSize(
       strCSVFileContents: ArrayBuffer[Array[String]]

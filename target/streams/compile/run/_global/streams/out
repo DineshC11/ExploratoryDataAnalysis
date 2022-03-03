@@ -1,10 +1,11 @@
-[0m[[0m[31merror[0m] [0m[0mjava.util.NoSuchElementException: head of empty list[0m
-[0m[[0m[31merror[0m] [0m[0m	at scala.collection.immutable.Nil$.head(List.scala:662)[0m
-[0m[[0m[31merror[0m] [0m[0m	at scala.collection.immutable.Nil$.head(List.scala:661)[0m
-[0m[[0m[31merror[0m] [0m[0m	at ExploratoryDataAnalysis.$anonfun$performAnalysis$8(ExploratoryDataAnalysis.scala:131)[0m
-[0m[[0m[31merror[0m] [0m[0m	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:190)[0m
-[0m[[0m[31merror[0m] [0m[0m	at ExploratoryDataAnalysis.performAnalysis(ExploratoryDataAnalysis.scala:112)[0m
-[0m[[0m[31merror[0m] [0m[0m	at ExploratoryDataAnalysis.analyzer(ExploratoryDataAnalysis.scala:47)[0m
+[0m[[0m[31merror[0m] [0m[0mjava.io.FileNotFoundException: home/dineshk/Downloads/Sample CSV Files/winequality-red1.csv (No such file or directory)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.io.FileInputStream.open0(Native Method)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.io.FileInputStream.open(FileInputStream.java:195)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.io.FileInputStream.<init>(FileInputStream.java:138)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.io.Source$.fromFile(Source.scala:94)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.io.Source$.fromFile(Source.scala:79)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.io.Source$.fromFile(Source.scala:57)[0m
+[0m[[0m[31merror[0m] [0m[0m	at ExploratoryDataAnalysis.analyzer(ExploratoryDataAnalysis.scala:41)[0m
 [0m[[0m[31merror[0m] [0m[0m	at Main$.main(Main.scala:15)[0m
 [0m[[0m[31merror[0m] [0m[0m	at Main.main(Main.scala)[0m
 [0m[[0m[31merror[0m] [0m[0m	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)[0m
@@ -24,4 +25,4 @@
 [0m[[0m[31merror[0m] [0m[0m	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)[0m
 [0m[[0m[31merror[0m] [0m[0m	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)[0m
 [0m[[0m[31merror[0m] [0m[0m	at java.lang.Thread.run(Thread.java:748)[0m
-[0m[[0m[31merror[0m] [0m[0m(Compile / [31mrun[0m) java.util.NoSuchElementException: head of empty list[0m
+[0m[[0m[31merror[0m] [0m[0m(Compile / [31mrun[0m) java.io.FileNotFoundException: home/dineshk/Downloads/Sample CSV Files/winequality-red1.csv (No such file or directory)[0m

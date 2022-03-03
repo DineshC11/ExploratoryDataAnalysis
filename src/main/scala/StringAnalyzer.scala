@@ -5,6 +5,14 @@ import org.apache.commons.lang3.time.StopWatch
 class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
     extends LazyLogging {
 
+  /** #1 Func : Analyze the string file possibilities.
+    *
+    * @param : File contents as array buffer of strings
+    * @return : The string columns have been identified in the previous class
+    * itself. So, the string operations are being performed over here for each and every
+    * column whichever was identified as string and the output is returned to main class.
+    */
+
   def process(): (
       ArrayBuffer[String],
       ArrayBuffer[String],
@@ -29,6 +37,13 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
     (colUniVal, colRepVal, colCaseType, colCntVal)
   }
 
+  /** #2 Func : To find out the unique strings in each row.
+    *
+    * @param : ArrayBuffer of string columns
+    * @return : To find out the count of unique values in each string column. And store
+    * the data in a separate container. So as to readily available to process final call.
+    */
+
   private def getColumnUniqueValues: ArrayBuffer[String] = {
 
     val stopWatch = new StopWatch()
@@ -49,6 +64,14 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
 
     return columUniq
   }
+
+  /** #3 Func : To find out the repeated strings in each row.
+    *
+    * @param : ArrayBuffer of string columns
+    * @return : To find out the count of repeated values in each string column and also
+    * list the repeated values in a column as an output. And store the data in a separate
+    * container. So as to readily available to process final call.
+    */
 
   private def getColumnRepeatedValues: ArrayBuffer[String] = {
 
@@ -83,6 +106,14 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
 
     return columRept
   }
+
+  /** #4 Func : To find out the column case type of strings in each row.
+    *
+    * @param : ArrayBuffer of string columns
+    * @return : To find out the count of upper, lower and mixed case type in each
+    * string column. And store the data in a separate container. So as to readily
+    * available to process final call.
+    */
 
   private def getColumnCaseType: ArrayBuffer[String] = {
 
@@ -122,6 +153,14 @@ class StringAnalyzer(strCSVFileContents: ArrayBuffer[Array[String]])
 
     return columCase
   }
+
+  /** #5 Func : To find out the abbreviation count of strings in each row.
+    *
+    * @param : ArrayBuffer of string columns
+    * @return : To find out the count of abbreviations present in each string
+    * column. And store the data in a separate container. So as to readily available to
+    * process final call.
+    */
 
   private def getAbbreviationCount: ArrayBuffer[String] = {
 
